@@ -1,3 +1,4 @@
+let score = 0;
 
 const fetchImage = () => {
     document.querySelector('.loader').innerHTML = '...Loading';
@@ -21,6 +22,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('new-pic').addEventListener('click', (event) => {
         fetchImage();
+    });
+
+try {
+    document.getElementById('upvote').addEventListener('click', (event) => {
+        score++;
+        document.querySelector('.score').innerHTML = score;
     })
+
+    document.getElementById('downvote').addEventListener('click', (event) => {
+        score--;
+        document.querySelector('.score').innerHTML = score;
+    })
+} catch(e) {
+    console.error(e);
+};
+
+
+document.getElementById('submit').addEventListener('click',  event.preventDefault((event) => {
+    let commentObject = formData();
+    let testValue = document.getElementById('user-comment').value;
+    commentObject.append(testValue);
+    commentObject.values((comment) => {
+        document.querySelector('.comments').innerHTML = comment;
+    })
+
+    }))
 
 })
