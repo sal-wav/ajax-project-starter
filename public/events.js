@@ -1,14 +1,17 @@
 
 const fetchImage = () => {
-    fetch('http://localhost:3000/kitten/image')
-    .then (function(res) {
-        return res.json()
-        
-    })
-    .then(data => {
-        document.querySelector('.cat-pic').src=data.src;
-    })
-};
+    fetch('/kitten/image')
+        .then(res => {
+            debugger;
+            return res.json();
+        })
+        .then((data) => {
+            debugger;
+            document.querySelector('.cat-pic').src = data.src;
+        })
+        .catch((error) => {
+            alert('ahhhhhhhhh');
+        });
+}
 
-document.addEventListener('DOMContentLoaded', fetchImage) 
-
+document.addEventListener('DOMContentLoaded', fetchImage)

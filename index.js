@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static("public"));
-app.use(morgan);
+app.use(morgan());
 
 const port = 3000;
 
