@@ -1,17 +1,26 @@
 
 const fetchImage = () => {
+    document.querySelector('.loader').innerHTML = '...Loading';
     fetch('/kitten/image')
         .then(res => {
-            debugger;
+            if (!res.ok) {
+                alert("Something went wrong! Please try again!")
+            };
             return res.json();
         })
         .then((data) => {
-            debugger;
             document.querySelector('.cat-pic').src = data.src;
+            document.querySelector('.loader').innerHTML = '';
         })
         .catch((error) => {
-            alert('ahhhhhhhhh');
+            console.error(error);
         });
 }
 
-document.addEventListener('DOMContentLoaded', fetchImage)
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    document.getElementById('new-pic').addEventListener('click', (event) => {
+        fetchImage();
+    })
+
+})
