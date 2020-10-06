@@ -38,15 +38,30 @@ try {
     console.error(e);
 };
 
+const commentForm = document.querySelector('.comment-form')
+commentForm.addEventListener('submit',  (event) => {
+    event.preventDefault();
+let commentObject = new FormData(commentForm);
+let comment = commentObject.get('user-comment');
+let commentArray = fetch('/kitten/comments', {
+method: 'POST',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify({comment: comment})
+})
 
-document.getElementById('submit').addEventListener('click',  event.preventDefault((event) => {
-    let commentObject = formData();
-    let testValue = document.getElementById('user-comment').value;
-    commentObject.append(testValue);
-    commentObject.values((comment) => {
-        document.querySelector('.comments').innerHTML = comment;
-    })
+commentArray.then(res => {
+    console.log(res.json());
+    // commentArray.forEach(comment => {
+        // document.querySelector('.comments').innerHTML = comment;
+    // })
+})
 
-    }))
 
+// commentObject.values((comment) => {
+//     document.querySelector('.comments').innerHTML = comment;
+//     })
+
+//     })
+
+})
 })
