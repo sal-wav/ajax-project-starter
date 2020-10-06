@@ -1,24 +1,14 @@
-document.addEventListener('DOMContentLoaded', (event) => {
 
-    let kitten;
+const fetchImage = () => {
+    fetch('http://localhost:3000/kitten/image')
+    .then (function(res) {
+        return res.json()
+        
+    })
+    .then(data => {
+        document.querySelector('.cat-pic').src=data.src;
+    })
+};
 
-    function newKittenPic(e) {
-        let returnValue = fetch(window.location+'kitten/image');
-        document.getElementById('loader').innerHTML = '<p>Loading...<p>';
-        returnValue.then((res => {
-            if (!res.ok) {
-                return 'error';
-            }
-            document.getElementById('error').innerHTML = '';
-            return res.json();
-        }).then((response => {
-            kitten = response;
-            document.getElementById('catPic').setAttribute('src', response.src);
-            document.getElementById('loader').innerHTML = '';
-        }).catch(err => {
-            console.error(err);
-        }))
-    )};
+document.addEventListener('DOMContentLoaded', fetchImage) 
 
-    
-})
