@@ -24,44 +24,43 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetchImage();
     });
 
-try {
-    document.getElementById('upvote').addEventListener('click', (event) => {
-        score++;
-        document.querySelector('.score').innerHTML = score;
+    try {
+        document.getElementById('upvote').addEventListener('click', (event) => {
+            score++;
+            document.querySelector('.score').innerHTML = score;
+        })
+
+        document.getElementById('downvote').addEventListener('click', (event) => {
+            score--;
+            document.querySelector('.score').innerHTML = score;
+        })
+    } catch(e) {
+        console.error(e);
+    };
+
+    const commentForm = document.querySelector('.comment-form');
+    
+    commentForm.addEventListener('submit',  (event) => {
+        event.preventDefault();
+        let commentObject = new FormData(commentForm);
+        let comment = commentObject.get('user-comment');
+        let commentArray = fetch('/kitten/comments', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({comment: comment})
     })
 
-    document.getElementById('downvote').addEventListener('click', (event) => {
-        score--;
-        document.querySelector('.score').innerHTML = score;
+    commentArray.then(res => {
+            if (!res.ok) {
+                alert("Something went wrong! Please try again!")
+            };
+            return res.json();
+        })
+        .then(json => {
+            let comments = json.comments;
+            document.querySelector('.comments').innerHTML = comments;
+        })
     })
-} catch(e) {
-    console.error(e);
-};
-
-const commentForm = document.querySelector('.comment-form')
-commentForm.addEventListener('submit',  (event) => {
-    event.preventDefault();
-let commentObject = new FormData(commentForm);
-let comment = commentObject.get('user-comment');
-let commentArray = fetch('/kitten/comments', {
-method: 'POST',
-headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({comment: comment})
-})
-
-commentArray.then(res => {
-    console.log(res.json());
-    // commentArray.forEach(comment => {
-        // document.querySelector('.comments').innerHTML = comment;
-    // })
-})
 
 
-// commentObject.values((comment) => {
-//     document.querySelector('.comments').innerHTML = comment;
-//     })
-
-//     })
-
-})
 })
